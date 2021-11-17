@@ -2,7 +2,7 @@
 
 ### This is official repo of "Nuke racer" game made by IZP-games using [pygame](https://github.com/pygame/pygame)
 
-![Alt Text](https://github.com/I-Z-P/nuke_racer/assets/alfa_beta.gif)
+![Alt Text](https://github.com/D1N3SHh/nuke_racer/blob/main/assets/alfa_beta.gif)
 
 
 ## To do

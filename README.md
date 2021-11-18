@@ -6,7 +6,9 @@
 
 
 ## To do
-- json config file
+- buttons animations
+- nuke start animation
+- json config file (optional)
 - player animations
 - main menu
 - randomized obstructions
@@ -14,6 +16,7 @@
 - paralax background (nuked city)
 - paticles effects (dust when falling on ground)
 - cloud that chase player
+- exit explosion effect
 
 
 ## Authors

@@ -10,7 +10,6 @@
 - player animations
 - main menu
 - randomized obstructions
-- score system
 - paralax background (nuked city)
 - paticles effects (dust when falling on ground)
 - cloud that chase player

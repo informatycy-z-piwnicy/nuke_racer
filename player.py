@@ -7,10 +7,15 @@ import pygame
 from pygame.math import Vector2
 from config import *
 from main import *
+from time import time
 
 
 class Player():
     def __init__(self):
+        fd = open("best_score")
+        self.best_score = int(fd.read())
+        fd.close()
+        self.start_time = time()
         self.position = Vector2(WIDTH / 4, 0)
         self.velocity = Vector2(10, 0)
         self.acceleration = Vector2(0.005, GRAVITY)
@@ -44,6 +49,13 @@ class Player():
     def render(self, screen):
         screen.blit(self.model, self.rect)
 
+    def check_score(self):
+        self.score = int(time() - self.start_time)
+        if self.score > self.best_score:
+            self.best_score = self.score
+            fd = open("best_score","w")
+            fd.write(str(self.best_score))
+            fd.close()
 
 # launch new game on start
 if __name__ == "__main__":

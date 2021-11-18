@@ -27,11 +27,12 @@ def main_loop(run, screen, player, level, camera):
         clock.tick(TICKRATE)
         screen.fill((49, 113, 181))
         handle_events(player)
+        player.check_score()
         player.check_ground(level.ground)
         player.move()
         player.render(screen)
         camera.follow_player(player)
-        level.render(screen, camera)
+        level.render(screen, camera,player.score)
         pygame.display.update()
 
 

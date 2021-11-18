@@ -36,15 +36,14 @@ class Menu():
         # other
         self.bomb_surface = pygame.image.load('assets/menu/bomb.png')
         self.player_surface = pygame.image.load('assets/player_model.png')
-        self.ground_surface = pygame.image.load('assets/ground.png')
+        self.level = Level()
+        
 
     # rendering menu
     def render(self):
         self.screen.fill((49, 113, 181))
-
-        self.screen.blit(self.player_surface, (WIDTH / 4, 840))             # make rendering from their class so they will move
-        self.screen.blit(self.ground_surface, (0, 960))                     #
-
+        self.level.render(self.screen, True)
+        self.screen.blit(self.player_surface, (WIDTH / 4, 840))
         if self.run:
             self.screen.blit(self.bomb_surface, (0, 0))
             self.screen.blit(self.start_button_surface, (WIDTH / 4 + 110, HEIGHT / 2 - 110))
@@ -55,9 +54,10 @@ class Menu():
 
         pygame.display.update()
 
-    # handling menu events
+    # handling menu
     def loop(self):
         while self.run:
+            # changing assets if under mouse
             mouse = pygame.mouse.get_pos()
             if self.exit_button_rect.collidepoint(mouse):
                 self.exit_button_current_surface = self.exit_button_pushed_surface
@@ -66,7 +66,7 @@ class Menu():
             else:
                 self.exit_button_current_surface = self.exit_button_surface
                 self.settings_button_current_surface = self.settings_button_surface
-
+            # hendling events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.run = False
@@ -82,7 +82,7 @@ class Menu():
                         self.settings()
             self.render()
 
-    # when exited button clicked
+    # when exit button clicked
     def exit(self):
         print('Exit button clicked')
         pygame.quit()

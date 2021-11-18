@@ -9,7 +9,8 @@
 - nuke start animation
 - json config file (optional)
 - player animations
-- main menu
+- settings menu
+- exit banner
 - randomized obstructions
 - score system
 - paralax background (nuked city)

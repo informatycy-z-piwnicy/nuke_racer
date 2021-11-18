@@ -38,7 +38,7 @@ def main_loop(run, screen, player, level, camera):
 
 # init new game
 def new_game():
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
     player = Player()
     camera = Camera()
     level = Level()

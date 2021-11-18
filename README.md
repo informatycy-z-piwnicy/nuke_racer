@@ -6,7 +6,6 @@
 
 
 ## To do
-- buttons animations
 - nuke start animation
 - json config file (optional)
 - player animations

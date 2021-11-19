@@ -2,7 +2,7 @@
 
 ### This is official repo of "Nuke racer" game made by IZP-games using [pygame](https://github.com/pygame/pygame)
 
-![Alt Text](https://github.com/D1N3SHh/nuke_racer/blob/main/assets/alfa_beta.gif)
+![Alt Text](https://github.com/D1N3SHh/nuke_racer/blob/main/assets/paralax.gif)
 
 
 ## To do
@@ -12,10 +12,10 @@
 - settings menu
 - exit banner
 - randomized obstructions
-- paralax background (nuked city)
 - paticles effects (dust when falling on ground)
 - cloud that chase player
 - exit explosion effect
+- move player few pixels down (like he was for real on sidewalk)
 
 
 ## Authors

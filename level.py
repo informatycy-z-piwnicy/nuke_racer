@@ -22,6 +22,47 @@ class Level():
         self.ground= [pygame.Rect(0, 960, 1920, BLOCK_SIZE)]
         self.ground_surface = pygame.image.load('assets/ground.png')
         self.font = pygame.font.SysFont("Arial",FONT_SIZE)
+        # buildings for background
+        self.building_one_surface = pygame.image.load('assets/buildings/building_one.png')
+        self.building_one_rect = self.building_one_surface.get_rect()
+        self.building_one_position = Vector2(100, HEIGHT - 120 - self.building_one_rect.size[1])
+        self.building_two_surface = pygame.image.load('assets/buildings/building_two.png')
+        self.building_two_rect = self.building_two_surface.get_rect()
+        self.building_two_position = Vector2(400, HEIGHT - 120 - self.building_two_rect.size[1])
+        self.building_three_surface = pygame.image.load('assets/buildings/building_three.png')
+        self.building_three_rect = self.building_three_surface.get_rect()
+        self.building_three_position = Vector2(800, HEIGHT - 120 - self.building_three_rect.size[1])
+        self.building_four_surface = pygame.image.load('assets/buildings/building_four.png')
+        self.building_four_rect = self.building_four_surface.get_rect()
+        self.building_four_position = Vector2(1200, HEIGHT - 120 - self.building_four_rect.size[1])
+        self.building_five_surface = pygame.image.load('assets/buildings/building_five.png')
+        self.building_five_rect = self.building_five_surface.get_rect()
+        self.building_five_position = Vector2(1600, HEIGHT - 120 - self.building_five_rect.size[1])
+
+    # rendering paralax background
+    def render_backgorund(self, screen, camera):
+        # setting positions of buildings
+        if self.building_one_position.x <= -self.building_one_rect.size[0]:
+            self.building_one_position.x = WIDTH
+        else: self.building_one_position.x -= 0.90
+        if self.building_two_position.x <= -self.building_two_rect.size[0]:
+            self.building_two_position.x = WIDTH
+        else: self.building_two_position.x -= 0.85
+        if self.building_three_position.x <= -self.building_three_rect.size[0]:
+            self.building_three_position.x = WIDTH
+        else: self.building_three_position.x -= 0.80
+        if self.building_four_position.x <= -self.building_four_rect.size[0]:
+            self.building_four_position.x = WIDTH
+        else: self.building_four_position.x -= 0.75
+        if self.building_five_position.x <= -self.building_five_rect.size[0]:
+            self.building_five_position.x = WIDTH
+        else: self.building_five_position.x -= 0.70
+        # rendering
+        screen.blit(self.building_one_surface, (self.building_one_position.x, self.building_one_position.y))
+        screen.blit(self.building_two_surface, (self.building_two_position.x, self.building_two_position.y))
+        screen.blit(self.building_three_surface, (self.building_three_position.x, self.building_three_position.y))
+        screen.blit(self.building_four_surface, (self.building_four_position.x, self.building_four_position.y))
+        screen.blit(self.building_five_surface, (self.building_five_position.x, self.building_five_position.y))
 
     # rendering and moving ground
     def render_ground(self, screen, camera):
@@ -34,7 +75,8 @@ class Level():
     # call other render functions
     def render(self, screen, camera, score):
         self.render_ground(screen, camera)
-        self.reneder_score(screen,score)
+        self.render_backgorund(screen, camera)
+        self.reneder_score(screen, score)
 
     # rendering screen
     def reneder_score(self, screen, score):

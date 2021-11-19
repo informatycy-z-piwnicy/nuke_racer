@@ -9,4 +9,5 @@ WIDTH = 1920
 TICKRATE = 80
 BLOCK_SIZE = 60
 GRAVITY = 1
+FONT_SIZE = 70
 ##################

@@ -42,7 +42,7 @@ class Menu():
     def render(self):
         if self.run:
             self.screen.fill((49, 113, 181))
-            self.level.render(self.screen, True)
+            self.level.render(self.screen, True, None)
             self.screen.blit(self.player_surface, (WIDTH / 4, 840))
             self.screen.blit(self.bomb_surface, (0, 0))
             self.screen.blit(self.start_button_surface, (WIDTH / 4 + 110, HEIGHT / 2 - 110))

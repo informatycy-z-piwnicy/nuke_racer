@@ -49,6 +49,7 @@ class Player():
     def render(self, screen):
         screen.blit(self.model, self.rect)
 
+    # checking score and saving when best score is beaten
     def check_score(self):
         self.score = int(time() - self.start_time)
         if self.score > self.best_score:

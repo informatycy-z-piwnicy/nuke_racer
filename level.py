@@ -36,11 +36,13 @@ class Level():
         self.render_ground(screen, camera)
         self.reneder_score(screen,score)
 
-    def reneder_score(self,screen,score):
-    	score = str(score)
-    	msg = "score: "+score
-    	text = self.font.render(msg,True,(0,0,0))
-    	screen.blit(text,(WIDTH-(50*len(msg)),0))
+    # rendering screen
+    def reneder_score(self, screen, score):
+        if score:
+            score = str(score)
+            msg = "score: "+score
+            text = self.font.render(msg,True,(0,0,0))
+            screen.blit(text,(WIDTH-(50*len(msg)),0))
 
 # launch new game on start
 if __name__ == "__main__":

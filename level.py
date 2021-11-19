@@ -27,7 +27,7 @@ class Level():
     def render_ground(self, screen, camera):
         if self.ground_position.x <= -WIDTH:
             self.ground_position.x = 0
-        else: self.ground_position.x -= 10
+        else: self.ground_position.x -= 5
         screen.blit(self.ground_surface, (self.ground_position.x, 960))
         screen.blit(self.ground_surface, (self.ground_position.x + WIDTH, 960))
 

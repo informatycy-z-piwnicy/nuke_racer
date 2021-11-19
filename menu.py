@@ -14,7 +14,7 @@ pygame.init()
 
 
 class Menu():
-    def __init__(self):
+    def __init__(self, level):
         self.run = True
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
         # start button
@@ -36,22 +36,18 @@ class Menu():
         # other
         self.bomb_surface = pygame.image.load('assets/menu/bomb.png')
         self.player_surface = pygame.image.load('assets/player_model.png')
-        self.level = Level()
-        
+        self.level = level
 
     # rendering menu
     def render(self):
-        self.screen.fill((49, 113, 181))
-        self.level.render(self.screen, True)
-        self.screen.blit(self.player_surface, (WIDTH / 4, 840))
         if self.run:
+            self.screen.fill((49, 113, 181))
+            self.level.render(self.screen, True)
+            self.screen.blit(self.player_surface, (WIDTH / 4, 840))
             self.screen.blit(self.bomb_surface, (0, 0))
             self.screen.blit(self.start_button_surface, (WIDTH / 4 + 110, HEIGHT / 2 - 110))
             self.screen.blit(self.exit_button_current_surface, self.exit_button_position)
             self.screen.blit(self.settings_button_current_surface, self.settings_button_position)
-        else:
-            print('Now nuke animation is launching')
-
         pygame.display.update()
 
     # handling menu
@@ -73,14 +69,17 @@ class Menu():
                     pygame.quit()
                 if event.type == MOUSEBUTTONDOWN:
                     if self.start_button_rect.collidepoint(mouse):
-                        self.run = False
-                        self.render()
-                        break
+                        self.start()
                     elif self.exit_button_rect.collidepoint(mouse):
                         self.exit()
                     elif self.settings_button_rect.collidepoint(mouse):
                         self.settings()
             self.render()
+
+    # when start button clicked
+    def start(self):
+        print('Start button clicked')
+        self.run = False
 
     # when exit button clicked
     def exit(self):
@@ -95,5 +94,6 @@ class Menu():
 
 # launch only main menu
 if __name__ == "__main__":
-    menu = Menu()
+    level = Level()
+    menu = Menu(level)
     menu.loop()

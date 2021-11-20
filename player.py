@@ -17,7 +17,7 @@ class Player():
         fd.close()
         self.start_time = time()
         self.position = Vector2(WIDTH / 4, 0)
-        self.velocity = Vector2(10, 0)
+        self.velocity = Vector2(2, 0)
         self.acceleration = Vector2(0.005, GRAVITY)
         self.model = pygame.image.load('assets/player_model.png')
         self.rect = self.model.get_rect()

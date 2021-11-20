@@ -14,7 +14,7 @@ pygame.init()
 
 
 class Menu():
-    def __init__(self, level):
+    def __init__(self, level, camera):
         self.run = True
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
         # start button
@@ -37,12 +37,13 @@ class Menu():
         self.bomb_surface = pygame.image.load('assets/menu/bomb.png')
         self.player_surface = pygame.image.load('assets/player_model.png')
         self.level = level
+        self.camera = camera
 
     # rendering menu
     def render(self):
         if self.run:
             self.screen.fill((49, 113, 181))
-            self.level.render(self.screen, True, None)
+            self.level.render(self.screen, self.camera, None)
             self.screen.blit(self.player_surface, (WIDTH / 4, 840))
             self.screen.blit(self.bomb_surface, (0, 0))
             self.screen.blit(self.start_button_surface, (WIDTH / 4 + 110, HEIGHT / 2 - 110))
@@ -94,6 +95,7 @@ class Menu():
 
 # launch only main menu
 if __name__ == "__main__":
+    camera = Camera()
     level = Level()
-    menu = Menu(level)
+    menu = Menu(level, camera)
     menu.loop()

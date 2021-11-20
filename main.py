@@ -43,8 +43,8 @@ def new_game():
     player = Player()
     camera = Camera()
     level = Level()
-    # menu = Menu(level)         # uncomment these lines to turn on main menu
-    # menu.loop()                # or comment to turn off
+    # menu = Menu(level, camera)         # uncomment these lines to turn on main menu
+    # menu.loop()                        # or comment to turn off
     main_loop(True, screen, player, level, camera)
 
 

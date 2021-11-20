@@ -8,6 +8,7 @@ from level import *
 from player import *
 from config import *
 from menu import *
+from obstructions import *
 
 
 # keyboard handling
@@ -22,7 +23,7 @@ def handle_events(player):
 
 
 # game loop
-def main_loop(run, screen, player, level, camera):
+def main_loop(run, screen, player, level, camera, obstruction):
     clock = pygame.time.Clock()
     while run:
         clock.tick(TICKRATE)
@@ -34,6 +35,7 @@ def main_loop(run, screen, player, level, camera):
         camera.follow_player(player)
         level.render(screen, camera, player.score)
         player.render(screen)
+        handle_obstructions(obstruction, camera, screen)
         pygame.display.update()
 
 
@@ -43,9 +45,10 @@ def new_game():
     player = Player()
     camera = Camera()
     level = Level()
+    obstruction = Obstruction()
     # menu = Menu(level, camera)         # uncomment these lines to turn on main menu
     # menu.loop()                        # or comment to turn off
-    main_loop(True, screen, player, level, camera)
+    main_loop(True, screen, player, level, camera, obstruction)
 
 
 # launch new game on start

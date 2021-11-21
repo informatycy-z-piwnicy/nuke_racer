@@ -50,6 +50,7 @@ class Obstruction():
 # spawning and handling obstructions
 def handle_obstructions(obstruction, camera, screen):
     obstruction.move(camera.shift)
+    obstruction.rect = pygame.Rect(obstruction.position.x, obstruction.position.y, obstruction.rect.size[0], obstruction.rect.size[1])
     obstruction.render(screen)
     if not obstruction.in_use():
         obstruction.draw_variant()

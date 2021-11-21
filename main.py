@@ -32,11 +32,15 @@ def main_loop(run, screen, player, level, camera, obstruction):
         player.check_score()
         player.check_ground(level.ground)
         player.move()
+        player.colisions(obstruction)
         camera.follow_player(player)
         level.render(screen, camera, player.score)
         player.render(screen)
         handle_obstructions(obstruction, camera, screen)
+        if player.death:
+            break
         pygame.display.update()
+    new_game()
 
 
 # init new game

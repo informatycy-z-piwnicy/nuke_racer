@@ -7,7 +7,7 @@ import pygame
 from pygame.math import Vector2
 from config import *
 from main import *
-from time import time
+from time import sleep, time
 
 
 class Player():
@@ -17,11 +17,12 @@ class Player():
         fd.close()
         self.start_time = time()
         self.position = Vector2(WIDTH / 4, 0)
-        self.velocity = Vector2(2, 0)
-        self.acceleration = Vector2(0.005, GRAVITY)
+        self.velocity = Vector2(10, 0)
+        self.acceleration = Vector2(0.002, GRAVITY)
         self.model = pygame.image.load('assets/player_model.png')
         self.rect = self.model.get_rect()
         self.jump = False
+        self.death = False
 
     # checking if player is on ground and if so, it disables gravity
     def check_ground(self, ground):
@@ -57,6 +58,12 @@ class Player():
             fd = open("best_score","w")
             fd.write(str(self.best_score))
             fd.close()
+
+    # checking if player colid with obstructions
+    def colisions(self, obstruction):
+        if self.rect.colliderect(obstruction.rect):
+            self.death = True
+
 
 # launch new game on start
 if __name__ == "__main__":

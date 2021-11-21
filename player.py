@@ -7,6 +7,7 @@ import pygame
 from pygame.math import Vector2
 from config import *
 from main import *
+import random
 
 
 class Player():
@@ -17,9 +18,11 @@ class Player():
         self.model = pygame.image.load('assets/player_model.png')
         self.rect = self.model.get_rect()
         self.jump = False
+        self.first_touch = True
+        self.dust = []
 
     # checking if player is on ground and if so, it disables gravity
-    def check_ground(self, ground):
+    def check_ground(self, ground, screen):
         self.acceleration.y = GRAVITY
         for tile in ground:
             if self.rect.colliderect(tile):
@@ -27,12 +30,18 @@ class Player():
                 self.acceleration.y *= 0
                 self.velocity.y *= 0
                 self.on_ground = True
-
+                if self.first_touch == True:
+                    self.first_touch = False
+                    self.dust.append(Dust(self.rect.midbottom))
+                self.particle_splash(screen)
     # player movement
-    def move(self):
+    def move(self,screen):
         if self.jump and self.on_ground:
             self.velocity.y -= 25
             self.acceleration.y = 1
+            self.dust.append(Dust(self.rect.midbottom))
+            self.first_touch = True
+        self.particle_splash(screen)
         self.jump = False
         self.on_ground = False
         self.velocity += self.acceleration
@@ -44,6 +53,42 @@ class Player():
     def render(self, screen):
         screen.blit(self.model, self.rect)
 
+    def particle_splash(self,screen):
+        for i in range(len(self.dust)):
+            if len(self.dust[i].particles) > 0:
+                self.dust[i].draw(screen)
+                self.dust[i].update()
+
+class Particle:
+    def __init__(self, pos):
+        self.x, self.y = pos[0], pos[1]
+        self.vx, self.vy = random.randint(-2, 2), random.randint(-10, 0)*.1
+        self.rad = 10
+
+    def draw(self, win):
+        pygame.draw.circle(win, (170, 170, 170), (self.x, self.y), self.rad)
+    
+    def update(self):
+        self.x += self.vx
+        self.y += self.vy
+        if random.randint(0, 100) < 40:
+            self.rad -= 1
+
+class Dust:
+    def __init__(self, pos):
+        self.pos = pos
+        self.particles = []
+        for i in range(100):
+            self.particles.append(Particle(self.pos))
+
+    def update(self):
+        for i in self.particles:
+            i.update()
+            self.particles = [particle for particle in self.particles if particle.rad > 0]
+
+    def draw(self, win):
+        for i in self.particles:
+            i.draw(win)
 
 # launch new game on start
 if __name__ == "__main__":

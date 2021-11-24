@@ -19,34 +19,38 @@ class Menu():
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
         # start button
         self.start_button_surface = pygame.image.load('assets/menu/nuke.png')
+        self.start_button_pushed_surface = pygame.image.load('assets/menu/nuke_pushed.png')
+        self.start_button_current_surface = self.start_button_surface
         self.start_button_position = Vector2(WIDTH / 4, 440)
         self.start_button_rect = pygame.Rect(self.start_button_position.x, self.start_button_position.y, 960, 200)
         # exit button
         self.exit_button_surface = pygame.image.load('assets/menu/exit_button.png')
         self.exit_button_pushed_surface = pygame.image.load('assets/menu/exit_button_pushed.png')
         self.exit_button_current_surface = self.exit_button_surface
-        self.exit_button_position = Vector2(WIDTH - 130, HEIGHT - 130)
+        self.exit_button_position = Vector2(WIDTH - 130, 0)
         self.exit_button_rect = pygame.Rect(self.exit_button_position.x, self.exit_button_position.y, 120, 120)
         # settings button
         self.settings_button_surface = pygame.image.load('assets/menu/settings_button.png')
         self.settings_button_pushed_surface = pygame.image.load('assets/menu/settings_button_pushed.png')
         self.settings_button_current_surface = self.settings_button_surface
-        self.settings_button_position = Vector2(WIDTH - 120, 0)
+        self.settings_button_position = Vector2(0, 0)
         self.settings_button_rect = pygame.Rect(self.settings_button_position.x, self.settings_button_position.y, 120, 120)
         # other
         self.bomb_surface = pygame.image.load('assets/menu/bomb.png')
         self.player_surface = pygame.image.load('assets/player_model.png')
+        self.background = pygame.image.load('assets/background.png')
         self.level = level
         self.camera = camera
 
     # rendering menu
     def render(self):
         if self.run:
-            self.screen.fill((49, 113, 181))
+            # self.screen.fill((49, 113, 181))
+            self.screen.blit(self.background, (0, 0))
             self.level.render(self.screen, self.camera, None)
             self.screen.blit(self.player_surface, (WIDTH / 4, 840))
             self.screen.blit(self.bomb_surface, (0, 0))
-            self.screen.blit(self.start_button_surface, (WIDTH / 4 + 110, HEIGHT / 2 - 110))
+            self.screen.blit(self.start_button_current_surface, (WIDTH / 4 + 110, HEIGHT / 2 - 110))
             self.screen.blit(self.exit_button_current_surface, self.exit_button_position)
             self.screen.blit(self.settings_button_current_surface, self.settings_button_position)
         pygame.display.update()
@@ -56,11 +60,14 @@ class Menu():
         while self.run:
             # changing assets if under mouse
             mouse = pygame.mouse.get_pos()
-            if self.exit_button_rect.collidepoint(mouse):
+            if self.start_button_rect.collidepoint(mouse):
+                self.start_button_current_surface = self.start_button_pushed_surface
+            elif self.exit_button_rect.collidepoint(mouse):
                 self.exit_button_current_surface = self.exit_button_pushed_surface
             elif self.settings_button_rect.collidepoint(mouse):
                 self.settings_button_current_surface = self.settings_button_pushed_surface
             else:
+                self.start_button_current_surface = self.start_button_surface
                 self.exit_button_current_surface = self.exit_button_surface
                 self.settings_button_current_surface = self.settings_button_surface
             # hendling events

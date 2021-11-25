@@ -23,11 +23,12 @@ def handle_events(player):
 
 
 # game loop
-def main_loop(run, screen, player, level, camera, obstruction):
+def main_loop(run, screen, player, level, camera, obstruction, background):
+    player.start_time = time()
     clock = pygame.time.Clock()
     while run:
         clock.tick(TICKRATE)
-        screen.fill((49, 113, 181))
+        screen.blit(background, (0,0))
         handle_events(player)
         player.check_score()
         player.check_ground(level.ground)
@@ -46,13 +47,14 @@ def main_loop(run, screen, player, level, camera, obstruction):
 # init new game
 def new_game():
     screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
+    background = pygame.image.load('assets/background.png')
     player = Player()
     camera = Camera()
     level = Level()
     obstruction = Obstruction()
-    # menu = Menu(level, camera)         # uncomment these lines to turn on main menu
-    # menu.loop()                        # or comment to turn off
-    main_loop(True, screen, player, level, camera, obstruction)
+    menu = Menu(level, camera)         # uncomment these lines to turn on main menu
+    menu.loop()                        # or comment to turn off
+    main_loop(True, screen, player, level, camera, obstruction, background)
 
 
 # launch new game on start

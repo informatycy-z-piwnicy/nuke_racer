@@ -2,20 +2,18 @@
 
 ### This is official repo of "Nuke racer" game made by IZP-games using [pygame](https://github.com/pygame/pygame)
 
-![Alt Text](https://github.com/D1N3SHh/nuke_racer/blob/main/assets/paralax.gif)
+![Alt Text](https://github.com/D1N3SHh/nuke_racer/blob/main/assets/alfa_002.gif)
 
 
 ## To do
-- nuke start animation
+- start animation
 - json config file (optional)
 - player animations
 - settings menu
 - exit banner
-- randomized obstructions
-- paticles effects (dust when falling on ground)
+- obstructions assets
 - cloud that chase player
 - exit explosion effect
-- move player few pixels down (like he was for real on sidewalk)
 
 
 ## Authors
@@ -23,7 +21,7 @@
 
 [Naris404](https://github.com/Naris404)
 
-dzideekk
+dzidek
 
 ## License
 

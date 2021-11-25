@@ -45,7 +45,6 @@ class Menu():
     # rendering menu
     def render(self):
         if self.run:
-            # self.screen.fill((49, 113, 181))
             self.screen.blit(self.background, (0, 0))
             self.level.render(self.screen, self.camera, None)
             self.screen.blit(self.player_surface, (WIDTH / 4, 840))

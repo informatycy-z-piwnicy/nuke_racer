@@ -24,6 +24,7 @@ def handle_events(player):
 
 # game loop
 def main_loop(run, screen, player, level, camera, obstruction, background):
+    player.start_time = time()
     clock = pygame.time.Clock()
     while run:
         clock.tick(TICKRATE)
@@ -53,7 +54,7 @@ def new_game():
     obstruction = Obstruction()
     menu = Menu(level, camera)         # uncomment these lines to turn on main menu
     menu.loop()                        # or comment to turn off
-    main_loop(True, screen, player, level, camera, obstruction)
+    main_loop(True, screen, player, level, camera, obstruction, background)
 
 
 # launch new game on start

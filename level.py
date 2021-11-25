@@ -23,7 +23,7 @@ class Level():
         self.ground_position = Vector2(0, 960)
         self.ground= [pygame.Rect(0, 960, 1920, BLOCK_SIZE)]
         self.ground_surface = pygame.image.load('assets/ground.png')
-        self.font = pygame.font.SysFont("Arial",FONT_SIZE)
+        self.font = pygame.font.Font('assets/font.ttf', 70)
         # buildings for background
         self.building_one_surface = pygame.image.load('assets/buildings/building_one.png')
         self.building_one_rect = self.building_one_surface.get_rect()
@@ -80,13 +80,13 @@ class Level():
         self.render_ground(screen, camera)
         self.reneder_score(screen, score)
 
-    # rendering screen
+    # rendering actual score
     def reneder_score(self, screen, score):
         if score:
             score = str(score)
             msg = "score: "+score
             text = self.font.render(msg,True,(0,0,0))
-            screen.blit(text,(WIDTH-(50*len(msg)),0))
+            screen.blit(text,(30, 30))
 
 # launch new game on start
 if __name__ == "__main__":

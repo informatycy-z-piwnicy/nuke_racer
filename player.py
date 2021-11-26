@@ -9,13 +9,21 @@ from config import *
 from main import *
 import random
 from particles import Particle, Dust
+from time import sleep, time
 
 
 class Player():
     def __init__(self):
+        try:
+            fd = open("best_score")
+            self.best_score = int(fd.read())
+            fd.close()
+        except:
+            self.best_score = 0
+        self.start_time = None
         self.position = Vector2(WIDTH / 4, 0)
         self.velocity = Vector2(10, 0)
-        self.acceleration = Vector2(0.005, GRAVITY)
+        self.acceleration = Vector2(0.002, GRAVITY)
         self.model = pygame.image.load('assets/player_model.png')
         self.rect = self.model.get_rect()
         self.jump = False
@@ -23,6 +31,7 @@ class Player():
         self.dust = []
         self.col = (170, 170, 170)
         self.dust_size = 100
+        self.death = False
 
     # checking if player is on ground and if so, it disables gravity
     def check_ground(self, ground, screen):
@@ -64,6 +73,20 @@ class Player():
                 self.dust[i].update()
         if len(self.dust) > 1:
             self.dust.pop(0)
+    # checking score and saving when best score is beaten
+    def check_score(self):
+        self.score = int(time() - self.start_time + 1)
+        if self.score > self.best_score:
+            self.best_score = self.score
+            fd = open("best_score","w")
+            fd.write(str(self.best_score))
+            fd.close()
+
+    # checking if player colid with obstructions
+    def colisions(self, obstruction):
+        if self.rect.colliderect(obstruction.rect):
+            self.death = True
+
 
 # launch new game on start
 if __name__ == "__main__":

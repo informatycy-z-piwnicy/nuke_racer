@@ -58,7 +58,6 @@ class Player():
 
     # creating partile slash while jumping and landing
     def particle_splash(self,screen):
-        print(self.dust)
         for i in range(len(self.dust)):
             if len(self.dust[i].particles) > 0:
                 self.dust[i].draw(screen,self.col)

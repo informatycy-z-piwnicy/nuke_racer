@@ -2,12 +2,14 @@
 # authors: D1N3SHh, Naris404, dzidek
 # https://github.com/I-Z-P/nuke_racer
 
+
 import pygame
 from pygame.math import Vector2
 from config import *
 from main import *
-
+from time import sleep, time
 pygame.init()
+
 
 class Camera():
     def __init__(self):
@@ -18,8 +20,10 @@ class Camera():
         self.position.x += player.velocity.x
         self.shift = player.velocity
 
+
 class Level():
     def __init__(self):
+        # assets section
         self.ground_position = Vector2(0, 960)
         self.ground= [pygame.Rect(0, 960, 1920, BLOCK_SIZE)]
         self.ground_surface = pygame.image.load('assets/ground.png')
@@ -40,6 +44,16 @@ class Level():
         self.building_five_surface = pygame.image.load('assets/buildings/building_five.png')
         self.building_five_rect = self.building_five_surface.get_rect()
         self.building_five_position = Vector2(1600, HEIGHT - 130 - self.building_five_rect.size[1])
+        # best score
+        self.start_time = None
+        self.score = None
+        try:
+            fd = open("best_score")
+            self.best_score = int(fd.read())
+            fd.close()
+        except:
+            self.best_score = 0
+        self.best_score_surface = self.font.render(str("Best: " + str(self.best_score)), True, (0,0,0))
 
     # rendering paralax background
     def render_backgorund(self, screen, camera):
@@ -75,10 +89,22 @@ class Level():
         screen.blit(self.ground_surface, (self.ground_position.x + WIDTH, 950))
 
     # call other render functions
-    def render(self, screen, camera, score):
+    def render(self, screen, camera):
         self.render_backgorund(screen, camera)
         self.render_ground(screen, camera)
-        self.reneder_score(screen, score)
+        self.reneder_score(screen, self.score)
+
+    # checking score and saving when best score is beaten
+    def check_score(self):
+        self.score = int(time() - self.start_time + 1)
+        self.previous_score = self.score
+        self.previous_score_surface = self.font.render(str("Previous: " + str(self.previous_score)), True, (0,0,0))
+        if self.score > self.best_score:
+            self.best_score = self.score
+            self.best_score_surface = self.font.render(str("Best: " + str(self.best_score)), True, (0,0,0))
+            fd = open("best_score","w")
+            fd.write(str(self.best_score))
+            fd.close()
 
     # rendering actual score
     def reneder_score(self, screen, score):

@@ -14,7 +14,7 @@ pygame.init()
 
 
 class Menu():
-    def __init__(self, level, camera):
+    def __init__(self, level, camera, previous_score):
         self.run = True
         self.exit_banner = False
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
@@ -24,6 +24,7 @@ class Menu():
         self.font = pygame.font.Font('assets/font.ttf', 70)
         self.level = level
         self.camera = camera
+        self.previous_score_surface = self.font.render(str("Previous: " + str(previous_score)), True, (0,0,0))
         # start button
         self.start_button_surface = pygame.image.load('assets/menu/nuke.png')
         self.start_button_pushed_surface = pygame.image.load('assets/menu/nuke_pushed.png')
@@ -57,12 +58,14 @@ class Menu():
     def render(self):
         if self.run:
             self.screen.blit(self.background, (0, 0))
-            self.level.render(self.screen, self.camera, None)
+            self.level.render(self.screen, self.camera)
             self.screen.blit(self.player_surface, (WIDTH / 4, 840))
             self.screen.blit(self.bomb_surface, (-50, -10))
             self.screen.blit(self.start_button_current_surface, (WIDTH / 4, HEIGHT / 2 - 120))
             self.screen.blit(self.exit_button_current_surface, self.exit_button_position)
             self.screen.blit(self.settings_button_current_surface, self.settings_button_position)
+            self.screen.blit(self.level.best_score_surface,(WIDTH / 2 - self.level.best_score_surface.get_width() / 2, 20))
+            self.screen.blit(self.previous_score_surface,(WIDTH / 2 - self.previous_score_surface.get_width() / 2, 80))
         if self.exit_banner:
             self.screen.blit(self.exit_banner_surface, (WIDTH / 4, HEIGHT / 4))
             self.screen.blit(self.banner_resume_button_current_surface, (self.banner_resume_button_position.x, self.banner_resume_button_position.y))

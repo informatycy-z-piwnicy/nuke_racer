@@ -24,36 +24,37 @@ def handle_events(player):
 
 # game loop
 def main_loop(run, screen, player, level, camera, obstruction, background):
-    player.start_time = time()
+    level.start_time = time()
     clock = pygame.time.Clock()
     while run:
         clock.tick(TICKRATE)
         screen.blit(background, (0,0))
         handle_events(player)
-        player.check_score()
+        level.check_score()
         player.check_ground(level.ground)
         player.move()
         player.colisions(obstruction)
         camera.follow_player(player)
-        level.render(screen, camera, player.score)
+        level.render(screen, camera)
         player.render(screen)
         handle_obstructions(obstruction, camera, screen)
         if player.death:
+            previous_score = level.previous_score  # tu skonczylem
             break
         pygame.display.update()
-    new_game()
+    new_game(previous_score)
 
 
 # init new game
-def new_game():
+def new_game(previous_score = 0):
     screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
     background = pygame.image.load('assets/background.png')
     player = Player()
     camera = Camera()
     level = Level()
     obstruction = Obstruction()
-    menu = Menu(level, camera)         # uncomment these lines to turn on main menu
-    menu.loop()                        # or comment to turn off
+    menu = Menu(level, camera, previous_score)         # uncomment these lines to turn on main menu
+    menu.loop()                                        # or comment to turn off
     main_loop(True, screen, player, level, camera, obstruction, background)
 
 

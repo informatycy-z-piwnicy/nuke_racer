@@ -48,7 +48,7 @@ def main_loop(run, screen, player, level, camera, obstruction, background):
 # init new game
 def new_game(previous_score = 0):
     screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
-    background = pygame.image.load('assets/background.png')
+    background = pygame.image.load('assets/background.png').convert_alpha()
     player = Player()
     camera = Camera()
     level = Level()

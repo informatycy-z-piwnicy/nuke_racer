@@ -7,6 +7,8 @@ import pygame
 from pygame.math import Vector2
 from config import *
 from main import *
+from particles import Particle, Dust
+from time import sleep, time
 
 
 class Player():
@@ -14,9 +16,13 @@ class Player():
         self.position = Vector2(WIDTH / 4, 0)
         self.velocity = Vector2(10, 0)
         self.acceleration = Vector2(0.002, GRAVITY)
-        self.model = pygame.image.load('assets/player_model.png')
+        self.model = pygame.image.load('assets/player_model.png').convert_alpha()
         self.rect = self.model.get_rect()
         self.jump = False
+        self.first_touch = True
+        self.dust = []
+        self.col = (170, 170, 170)
+        self.dust_size = 100
         self.death = False
 
     # checking if player is on ground and if so, it disables gravity
@@ -28,12 +34,16 @@ class Player():
                 self.acceleration.y *= 0
                 self.velocity.y *= 0
                 self.on_ground = True
-
+                if self.first_touch == True:
+                    self.first_touch = False
+                    self.dust.append(Dust(self.rect.midbottom, 10, self.dust_size, self.col, self.velocity[0]/2))
     # player movement
     def move(self):
         if self.jump and self.on_ground:
             self.velocity.y -= 25
             self.acceleration.y = 1
+            self.dust.append(Dust(self.rect.midbottom, 10, self.dust_size, self.col, self.velocity[0]/2))
+            self.first_touch = True
         self.jump = False
         self.on_ground = False
         self.velocity += self.acceleration
@@ -44,6 +54,16 @@ class Player():
     # rendering player
     def render(self, screen):
         screen.blit(self.model, self.rect)
+        self.particle_splash(screen)
+
+    # creating partile slash while jumping and landing
+    def particle_splash(self,screen):
+        for i in range(len(self.dust)):
+            if len(self.dust[i].particles) > 0:
+                self.dust[i].draw(screen)
+                self.dust[i].update()
+        if len(self.dust) > 1:
+            self.dust.pop(0)
 
     # checking if player colid with obstructions
     def colisions(self, obstruction):

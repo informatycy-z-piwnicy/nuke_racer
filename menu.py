@@ -18,27 +18,27 @@ class Menu():
         self.run = True
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
         # start button
-        self.start_button_surface = pygame.image.load('assets/menu/nuke.png')
-        self.start_button_pushed_surface = pygame.image.load('assets/menu/nuke_pushed.png')
+        self.start_button_surface = pygame.image.load('assets/menu/nuke.png').convert_alpha()
+        self.start_button_pushed_surface = pygame.image.load('assets/menu/nuke_pushed.png').convert_alpha()
         self.start_button_current_surface = self.start_button_surface
         self.start_button_position = Vector2(WIDTH / 4, 440)
         self.start_button_rect = pygame.Rect(self.start_button_position.x, self.start_button_position.y, 960, 200)
         # exit button
-        self.exit_button_surface = pygame.image.load('assets/menu/exit_button.png')
-        self.exit_button_pushed_surface = pygame.image.load('assets/menu/exit_button_pushed.png')
+        self.exit_button_surface = pygame.image.load('assets/menu/exit_button.png').convert_alpha()
+        self.exit_button_pushed_surface = pygame.image.load('assets/menu/exit_button_pushed.png').convert_alpha()
         self.exit_button_current_surface = self.exit_button_surface
         self.exit_button_position = Vector2(WIDTH - 130, 0)
         self.exit_button_rect = pygame.Rect(self.exit_button_position.x, self.exit_button_position.y, 120, 120)
         # settings button
-        self.settings_button_surface = pygame.image.load('assets/menu/settings_button.png')
-        self.settings_button_pushed_surface = pygame.image.load('assets/menu/settings_button_pushed.png')
+        self.settings_button_surface = pygame.image.load('assets/menu/settings_button.png').convert_alpha()
+        self.settings_button_pushed_surface = pygame.image.load('assets/menu/settings_button_pushed.png').convert_alpha()
         self.settings_button_current_surface = self.settings_button_surface
         self.settings_button_position = Vector2(0, 0)
         self.settings_button_rect = pygame.Rect(self.settings_button_position.x, self.settings_button_position.y, 120, 120)
         # other
-        self.bomb_surface = pygame.image.load('assets/menu/bomb.png')
-        self.player_surface = pygame.image.load('assets/player_model.png')
-        self.background = pygame.image.load('assets/background.png')
+        self.bomb_surface = pygame.image.load('assets/menu/bomb.png').convert_alpha()
+        self.player_surface = pygame.image.load('assets/player_model.png').convert_alpha()
+        self.background = pygame.image.load('assets/background.png').convert_alpha()
         self.level = level
         self.camera = camera
 

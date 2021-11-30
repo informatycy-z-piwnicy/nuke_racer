@@ -29,12 +29,12 @@ def main_loop(run, screen, player, level, camera, obstruction, background):
     while run:
         clock.tick(TICKRATE)
         screen.blit(background, (0,0))
+        player.check_score()
         handle_events(player)
+        camera.follow_player(player)
         player.check_ground(level.ground,screen)
         player.move(screen)
-        player.check_score()
         player.colisions(obstruction)
-        camera.follow_player(player)
         level.render(screen, camera, player.score)
         player.render(screen)
         handle_obstructions(obstruction, camera, screen)
@@ -47,7 +47,7 @@ def main_loop(run, screen, player, level, camera, obstruction, background):
 # init new game
 def new_game():
     screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
-    background = pygame.image.load('assets/background.png')
+    background = pygame.image.load('assets/background.png').convert_alpha()
     player = Player()
     camera = Camera()
     level = Level()

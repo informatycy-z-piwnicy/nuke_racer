@@ -26,22 +26,22 @@ class Level():
         # assets section
         self.ground_position = Vector2(0, 960)
         self.ground= [pygame.Rect(0, 960, 1920, BLOCK_SIZE)]
-        self.ground_surface = pygame.image.load('assets/ground.png')
+        self.ground_surface = pygame.image.load('assets/ground.png').convert_alpha()
         self.font = pygame.font.Font('assets/font.ttf', 70)
         # buildings for background
-        self.building_one_surface = pygame.image.load('assets/buildings/building_one.png')
+        self.building_one_surface = pygame.image.load('assets/buildings/building_one.png').convert_alpha()
         self.building_one_rect = self.building_one_surface.get_rect()
         self.building_one_position = Vector2(100, HEIGHT - 130 - self.building_one_rect.size[1])
-        self.building_two_surface = pygame.image.load('assets/buildings/building_two.png')
+        self.building_two_surface = pygame.image.load('assets/buildings/building_two.png').convert_alpha()
         self.building_two_rect = self.building_two_surface.get_rect()
         self.building_two_position = Vector2(400, HEIGHT - 130 - self.building_two_rect.size[1])
-        self.building_three_surface = pygame.image.load('assets/buildings/building_three.png')
+        self.building_three_surface = pygame.image.load('assets/buildings/building_three.png').convert_alpha()
         self.building_three_rect = self.building_three_surface.get_rect()
         self.building_three_position = Vector2(800, HEIGHT - 130 - self.building_three_rect.size[1])
-        self.building_four_surface = pygame.image.load('assets/buildings/building_four.png')
+        self.building_four_surface = pygame.image.load('assets/buildings/building_four.png').convert_alpha()
         self.building_four_rect = self.building_four_surface.get_rect()
         self.building_four_position = Vector2(1200, HEIGHT - 130 - self.building_four_rect.size[1])
-        self.building_five_surface = pygame.image.load('assets/buildings/building_five.png')
+        self.building_five_surface = pygame.image.load('assets/buildings/building_five.png').convert_alpha()
         self.building_five_rect = self.building_five_surface.get_rect()
         self.building_five_position = Vector2(1600, HEIGHT - 130 - self.building_five_rect.size[1])
         # best score

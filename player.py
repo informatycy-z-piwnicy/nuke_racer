@@ -14,13 +14,6 @@ from time import sleep, time
 
 class Player():
     def __init__(self):
-        try:
-            fd = open("best_score")
-            self.best_score = int(fd.read())
-            fd.close()
-        except:
-            self.best_score = 0
-        self.start_time = None
         self.position = Vector2(WIDTH / 4, 0)
         self.velocity = Vector2(10, 0)
         self.acceleration = Vector2(0.002, GRAVITY)
@@ -73,14 +66,6 @@ class Player():
                 self.dust[i].update()
         if len(self.dust) > 1:
             self.dust.pop(0)
-    # checking score and saving when best score is beaten
-    def check_score(self):
-        self.score = int(time() - self.start_time + 1)
-        if self.score > self.best_score:
-            self.best_score = self.score
-            fd = open("best_score","w")
-            fd.write(str(self.best_score))
-            fd.close()
 
     # checking if player colid with obstructions
     def colisions(self, obstruction):

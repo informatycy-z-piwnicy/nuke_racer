@@ -10,8 +10,6 @@
 - json config file (optional)
 - player animations
 - settings menu
-- exit banner
-- obstructions assets
 - cloud that chase player
 - exit explosion effect
 

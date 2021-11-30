@@ -14,9 +14,17 @@ pygame.init()
 
 
 class Menu():
-    def __init__(self, level, camera):
+    def __init__(self, level, camera, previous_score):
         self.run = True
+        self.exit_banner = False
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
+        self.bomb_surface = pygame.image.load('assets/menu/bomb.png')
+        self.player_surface = pygame.image.load('assets/player_model.png')
+        self.background = pygame.image.load('assets/background.png')
+        self.font = pygame.font.Font('assets/font.ttf', 70)
+        self.level = level
+        self.camera = camera
+        self.previous_score_surface = self.font.render(str("Previous: " + str(previous_score)), True, (0,0,0))
         # start button
         self.start_button_surface = pygame.image.load('assets/menu/nuke.png')
         self.start_button_pushed_surface = pygame.image.load('assets/menu/nuke_pushed.png')
@@ -35,23 +43,33 @@ class Menu():
         self.settings_button_current_surface = self.settings_button_surface
         self.settings_button_position = Vector2(0, 0)
         self.settings_button_rect = pygame.Rect(self.settings_button_position.x, self.settings_button_position.y, 120, 120)
-        # other
-        self.bomb_surface = pygame.image.load('assets/menu/bomb.png')
-        self.player_surface = pygame.image.load('assets/player_model.png')
-        self.background = pygame.image.load('assets/background.png')
-        self.level = level
-        self.camera = camera
+        # exit banner
+        self.exit_banner_surface = pygame.image.load('assets/menu/exit_banner.png')
+        self.banner_button_surface = pygame.image.load('assets/menu/button.png')
+        self.banner_pushed_button_surface = pygame.image.load('assets/menu/pushed_button.png')
+        self.banner_exit_button_current_surface = self.banner_button_surface
+        self.banner_exit_button_position = Vector2(WIDTH - WIDTH / 4 - 240, HEIGHT - HEIGHT / 4 - 130)
+        self.banner_exit_button_rect = pygame.Rect(self.banner_exit_button_position.x, self.banner_exit_button_position.y, 120, 120)
+        self.banner_resume_button_current_surface = self.banner_button_surface
+        self.banner_resume_button_position = Vector2(WIDTH / 4 + 110, HEIGHT - HEIGHT / 4 - 130)
+        self.banner_resume_button_rect = pygame.Rect(self.banner_resume_button_position.x, self.banner_resume_button_position.y, 120, 120)
 
     # rendering menu
     def render(self):
         if self.run:
             self.screen.blit(self.background, (0, 0))
-            self.level.render(self.screen, self.camera, None)
+            self.level.render(self.screen, self.camera)
             self.screen.blit(self.player_surface, (WIDTH / 4, 840))
-            self.screen.blit(self.bomb_surface, (0, 0))
-            self.screen.blit(self.start_button_current_surface, (WIDTH / 4 + 110, HEIGHT / 2 - 110))
+            self.screen.blit(self.bomb_surface, (-50, -10))
+            self.screen.blit(self.start_button_current_surface, (WIDTH / 4, HEIGHT / 2 - 120))
             self.screen.blit(self.exit_button_current_surface, self.exit_button_position)
             self.screen.blit(self.settings_button_current_surface, self.settings_button_position)
+            self.screen.blit(self.level.best_score_surface,(WIDTH / 2 - self.level.best_score_surface.get_width() / 2, 20))
+            self.screen.blit(self.previous_score_surface,(WIDTH / 2 - self.previous_score_surface.get_width() / 2, 80))
+        if self.exit_banner:
+            self.screen.blit(self.exit_banner_surface, (WIDTH / 4, HEIGHT / 4))
+            self.screen.blit(self.banner_resume_button_current_surface, (self.banner_resume_button_position.x, self.banner_resume_button_position.y))
+            self.screen.blit(self.banner_exit_button_current_surface, (self.banner_exit_button_position.x, self.banner_exit_button_position.y))
         pygame.display.update()
 
     # handling menu
@@ -90,8 +108,26 @@ class Menu():
 
     # when exit button clicked
     def exit(self):
-        print('Exit button clicked')
-        pygame.quit()
+        self.exit_banner = True
+        while self.exit_banner:
+            self.render()
+            mouse = pygame.mouse.get_pos()
+            if self.banner_resume_button_rect.collidepoint(mouse):
+                self.banner_resume_button_current_surface = self.banner_pushed_button_surface
+            elif self.banner_exit_button_rect.collidepoint(mouse):
+                self.banner_exit_button_current_surface = self.banner_pushed_button_surface
+            else:
+                self.banner_exit_button_current_surface = self.banner_button_surface
+                self.banner_resume_button_current_surface = self.banner_button_surface
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    self.run = False
+                    pygame.quit()
+                if event.type == MOUSEBUTTONDOWN:
+                    if self.banner_resume_button_rect.collidepoint(mouse):
+                        self.exit_banner = False
+                    elif self.banner_exit_button_rect.collidepoint(mouse):
+                        pygame.quit()
 
     # when settings button clicked
     def settings(self):

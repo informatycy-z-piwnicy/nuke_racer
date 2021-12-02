@@ -52,8 +52,8 @@ def new_game():
     camera = Camera()
     level = Level()
     obstruction = Obstruction()
-    menu = Menu(level, camera)         # uncomment these lines to turn on main menu
-    menu.loop()                        # or comment to turn off
+    menu = Menu(level, camera, player)           # uncomment these lines to turn on main menu
+    menu.loop()                                  # or comment to turn off
     main_loop(True, screen, player, level, camera, obstruction, background)
 
 

@@ -39,7 +39,7 @@ def main_loop(run, screen, player, level, camera, obstruction, background):
         player.render(screen)
         handle_obstructions(obstruction, camera, screen)
         if player.death:
-            previous_score = level.previous_score  # tu skonczylem
+            previous_score = level.previous_score
             break
         pygame.display.update()
     new_game(previous_score)

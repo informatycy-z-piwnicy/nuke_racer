@@ -10,6 +10,7 @@ from level import *
 from player import *
 from config import *
 from main import *
+from particles import Particle, Dust
 pygame.init()
 
 
@@ -18,7 +19,7 @@ class Menu():
         self.run = True
         self.exit_banner = False
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
-        self.bomb_surface = pygame.image.load('assets/menu/bomb.png').convert_alpha()
+        self.bomb_current_surface = pygame.image.load('assets/menu/bomb.png').convert_alpha()
         self.player_surface = pygame.image.load('assets/player_model.png').convert_alpha()
         self.background = pygame.image.load('assets/background.png').convert_alpha()
         self.font = pygame.font.Font('assets/font.ttf', 70)
@@ -55,18 +56,25 @@ class Menu():
         self.banner_resume_button_position = Vector2(WIDTH / 4 + 110, HEIGHT - HEIGHT / 4 - 130)
         self.banner_resume_button_rect = pygame.Rect(self.banner_resume_button_position.x, self.banner_resume_button_position.y, 120, 120)
 
+        # bomb animation config
+        self.dust = []
+        self.color = (255,0,0)
+        self.size = 100
+        self.rad = 10
+
     # rendering menu
     def render(self):
         if self.run:
             self.screen.blit(self.background, (0, 0))
             self.level.render(self.screen, self.camera)
             self.screen.blit(self.player_surface, (WIDTH / 4, 840))
-            self.screen.blit(self.bomb_surface, (-50, -10))
+            self.screen.blit(self.bomb_current_surface, (-50, -10))
             self.screen.blit(self.start_button_current_surface, (WIDTH / 4, HEIGHT / 2 - 120))
             self.screen.blit(self.exit_button_current_surface, self.exit_button_position)
             self.screen.blit(self.settings_button_current_surface, self.settings_button_position)
             self.screen.blit(self.level.best_score_surface,(WIDTH / 2 - self.level.best_score_surface.get_width() / 2, 20))
             self.screen.blit(self.previous_score_surface,(WIDTH / 2 - self.previous_score_surface.get_width() / 2, 80))
+            self.bomb_particles()
         if self.exit_banner:
             self.screen.blit(self.exit_banner_surface, (WIDTH / 4, HEIGHT / 4))
             self.screen.blit(self.banner_resume_button_current_surface, (self.banner_resume_button_position.x, self.banner_resume_button_position.y))
@@ -80,11 +88,15 @@ class Menu():
             mouse = pygame.mouse.get_pos()
             if self.start_button_rect.collidepoint(mouse):
                 self.start_button_current_surface = self.start_button_pushed_surface
+                if len(self.dust) == 0:
+                    self.dust.append(Dust((self.start_button_current_surface.get_rect()[2]-580,self.start_button_current_surface.get_rect()[3]+330), self.rad, self.size, self.color, 10, "left", 1))
             elif self.exit_button_rect.collidepoint(mouse):
                 self.exit_button_current_surface = self.exit_button_pushed_surface
             elif self.settings_button_rect.collidepoint(mouse):
                 self.settings_button_current_surface = self.settings_button_pushed_surface
             else:
+                if len(self.dust) > 0:
+                    self.dust.pop(0)
                 self.start_button_current_surface = self.start_button_surface
                 self.exit_button_current_surface = self.exit_button_surface
                 self.settings_button_current_surface = self.settings_button_surface
@@ -135,10 +147,17 @@ class Menu():
         print('Settings button clicked')
         pygame.quit()
 
+    # when cursor is on bomb
+    def bomb_particles(self):
+        for i in range(len(self.dust)):
+            self.dust[i].draw(self.screen)
+            self.dust[i].update_for_loop()
+        if len(self.dust) > 1:
+            self.dust.pop(0)
 
 # launch only main menu
 if __name__ == "__main__":
     camera = Camera()
     level = Level()
-    menu = Menu(level, camera)
+    menu = Menu(level, camera, 0) # previous score is 0 for tests only
     menu.loop()

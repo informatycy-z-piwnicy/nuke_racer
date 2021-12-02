@@ -23,6 +23,8 @@ class Camera():
 
 class Level():
     def __init__(self):
+        # seting display mode to avoid pygame error about video mode
+        pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
         # assets section
         self.ground_position = Vector2(0, 960)
         self.ground= [pygame.Rect(0, 960, 1920, BLOCK_SIZE)]

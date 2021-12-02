@@ -36,13 +36,13 @@ class Player():
                 self.on_ground = True
                 if self.first_touch == True:
                     self.first_touch = False
-                    self.dust.append(Dust(self.rect.midbottom, 10, self.dust_size, self.col, self.velocity[0]/2))
+                    self.dust.append(Dust(self.rect.midbottom, 10, self.dust_size, self.col, self.velocity[0]/2, None, 1))
     # player movement
     def move(self):
         if self.jump and self.on_ground:
             self.velocity.y -= 25
             self.acceleration.y = 1
-            self.dust.append(Dust(self.rect.midbottom, 10, self.dust_size, self.col, self.velocity[0]/2))
+            self.dust.append(Dust(self.rect.midbottom, 10, self.dust_size, self.col, self.velocity[0]/2, None, 1))
             self.first_touch = True
         self.jump = False
         self.on_ground = False
@@ -69,7 +69,6 @@ class Player():
     def colisions(self, obstruction):
         if self.rect.colliderect(obstruction.rect):
             self.death = True
-
 
 # launch new game on start
 if __name__ == "__main__":
